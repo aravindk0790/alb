@@ -1,8 +1,9 @@
 # S3 bucket creation
 
 resource "aws_s3_bucket" "console_access_logs" {
-  bucket = upper("${data.aws_iam_account_alias.current.account_alias}-console-alb-access-logs")
+  bucket = "${data.aws_iam_account_alias.current.account_alias}-console-alb-access-logs"
   acl    = "log-delivery-write"
+  policy = templatefile("alb_policy.json",{account_id = data.aws_caller_identity.current.account_id, bucket_name="${data.aws_iam_account_alias.current.account_alias}-console-alb-access-logs"})
 
   server_side_encryption_configuration {
     rule {
