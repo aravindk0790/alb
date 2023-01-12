@@ -5,7 +5,7 @@
             "Sid": "ForceSSl",
             "Action": "s3:*",
             "Effect": "Deny",
-            "Resource": "arn:aws:s3:::${var.project_identifier}-raw-cdr/*",
+            "Resource": "arn:aws:s3:::${bucket_name}/*",
             "Condition": {
               "Bool": {
                 "aws:SecureTransport": "false"
