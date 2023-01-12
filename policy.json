@@ -2,16 +2,13 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "ForceSSl",
-            "Action": "s3:*",
-            "Effect": "Deny",
-            "Resource": "arn:aws:s3:::${bucket_name}/*",
-            "Condition": {
-              "Bool": {
-                "aws:SecureTransport": "false"
-              }
+            "Sid": "allow-alb-logging",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::${account_id}:root"
             },
-            "Principal": "*"
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::{bucket_name}/*"
         }
     ]
 }
