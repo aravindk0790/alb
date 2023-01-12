@@ -1,10 +1,8 @@
 # S3 bucket creation
 
-resource "aws_s3_bucket" "access_logging" {
-  bucket = upper("${data.aws_iam_account_alias.current.account_alias}-access-logging")
+resource "aws_s3_bucket" "console_access_logs" {
+  bucket = upper("${data.aws_iam_account_alias.current.account_alias}-console-alb-access-logs")
   acl    = "log-delivery-write"
-
-# Enabling encryption for the bucket
 
   server_side_encryption_configuration {
     rule {
@@ -14,13 +12,9 @@ resource "aws_s3_bucket" "access_logging" {
     }
   }
 
-# Enable versioning of the objects
-
   versioning {
     enabled = true
   }
-
-# Enable the lifecycle rule to move the objects to different storage class
 
   lifecycle_rule {
     id      = "transition-to-glacier"
